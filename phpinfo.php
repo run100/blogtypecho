@@ -1,5 +1,6 @@
 <?
-
+#phpinfo();
+#exit;
 session_start();
 
 $_SESSION['key'] = 'val';
