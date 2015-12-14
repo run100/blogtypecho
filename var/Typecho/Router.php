@@ -119,6 +119,18 @@ class Typecho_Router
         /** 获取PATHINFO */
         $pathInfo = self::getPathInfo();
 
+        // 后台URL修改,收录的URL不能访问,临时处理302
+        //echo $pathInfo; exit;
+
+        if ( preg_match('/^\/archives\/\d*\/?$/isU', $pathInfo)  ) {
+            if ( substr($pathInfo, -1) == '/' ) {
+                $pathInfo = substr($pathInfo, 0, -1);
+            }
+            header('Location:http://blog.chromev.com'.$pathInfo.'.html', true, 302);
+            exit;
+        }
+
+
         foreach (self::$_routingTable as $key => $route) {
             if (preg_match($route['regx'], $pathInfo, $matches)) {
                 self::$current = $key;
